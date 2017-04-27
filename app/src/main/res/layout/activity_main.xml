@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.nikhil.offinaheartbeat.MainActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+    <Button
+        android:id="@+id/btnBTON"
+        android:onClick="enableBT"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Turn on Bluetooth"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnFindDevices"
+        android:layout_width="197dp"
+        android:layout_height="48dp"
+        android:text="Discover more Devices"
+        android:onClick="BTDiscover"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/lvNewDevices"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose a Paired Device"
+        android:layout_marginStart="25dp"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="62dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/btnFindDevices"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="25dp" />
+
+
+
+    <ListView
+        android:id="@+id/lvNewDevices"
+        android:layout_width="0dp"
+        android:layout_height="136dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="165dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="328dp"
+        android:layout_height="47dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="44dp"
+        android:layout_marginEnd="44dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="44dp"
+        android:layout_marginRight="44dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="0dp" />
+
+    <TextView
+        android:id="@+id/hr"
+        android:layout_width="133dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="20dp"
+        android:text="BPM"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="20sp"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="12dp" />
+
+
+</android.support.constraint.ConstraintLayout>
