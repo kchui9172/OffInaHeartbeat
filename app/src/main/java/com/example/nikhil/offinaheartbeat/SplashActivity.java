@@ -13,7 +13,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, MainActivity.class);
+//        Intent intent = new Intent(this, MainActivity.class);
+
+        //Splash screen directs to page to connect smart appliances
+        Intent intent = new Intent(this, SmartDeviceSetup.class);
         startActivity(intent);
         finish();
     }

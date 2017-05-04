@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Off in a Heartbeat</string>
+    <string name="title_activity_smart_device_setup">"Connect Any Smart Appliances "</string>
 </resources>
