@@ -27,7 +27,8 @@
         <activity
             android:name=".SmartDeviceSetup"
             android:label="@string/title_activity_smart_device_setup">
-            <!--android:theme="@style/AppTheme.NoActionBar">-->
+
+            <!-- android:theme="@style/AppTheme.NoActionBar"> -->
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -35,6 +36,7 @@
                 <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             </intent-filter>
         </activity>
+        <activity android:name=".DisplayHeartRate"></activity>
     </application>
 
 </manifest>

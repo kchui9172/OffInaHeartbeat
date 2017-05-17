@@ -20,22 +20,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.util.Arrays;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
 
-//NEWLY ADDED FOR PLOT
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.PointLabelFormatter;
-import com.androidplot.xy.XYPlot;
-import com.androidplot.xy.SimpleXYSeries;
-
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnItemSelectedListener, Observer  {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnItemSelectedListener {
     private static final String TAG = "MainActivity";
 
     BluetoothAdapter mBluetoothAdapter;
@@ -45,9 +38,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ListView lvNewDevices;
     boolean H7 = false;
     private Spinner spinner1;
-
-
-    private XYPlot plot;
 
     //Turn Bluetooth on/off automatically
     private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
@@ -145,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         unregisterReceiver(mBroadcastReceiver1);
         unregisterReceiver(mBroadcastReceiver3);
         unregisterReceiver(mBroadcastReceiver4);
-        DataHandler.getInstance().deleteObserver(this);
+        //DataHandler.getInstance().deleteObserver(this);
     }
 
     @Override
@@ -153,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "Starting Off in a Heartbeat Application.");
-        DataHandler.getInstance().addObserver(this);
+        //DataHandler.getInstance().addObserver(this);
 
         lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);
         mBTDevices = new ArrayList<>();
@@ -317,9 +307,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Log.i(TAG,"starting to receive data");
 
                 //Once start receiving data, should  go to new activity
-
-//                Intent intent = new Intent(this, SmartDeviceSetup.class);
-//                startActivity(intent);
+                Intent intent = new Intent(this, DisplayHeartRate.class);
+                startActivity(intent);
             }
 
         }
@@ -339,26 +328,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void update(Observable observable, Object data) {
-        receiveData();
-    }
-
-    public void receiveData() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                TextView hr = (TextView) findViewById(R.id.hr);
-                hr.setText(DataHandler.getInstance().getLastValue());
-
-                TextView min = (TextView) findViewById(R.id.min);
-                min.setText(DataHandler.getInstance().getMin());
-
-                TextView avg = (TextView) findViewById(R.id.avg);
-                avg.setText(DataHandler.getInstance().getAvg());
-
-                TextView max = (TextView) findViewById(R.id.max);
-                max.setText(DataHandler.getInstance().getMax());
-            }
-        });
-    }
+//    public void update(Observable observable, Object data) {
+//        receiveData();
+//    }
+//
+//    public void receiveData() {
+//        runOnUiThread(new Runnable() {
+//            public void run() {
+//                TextView hr = (TextView) findViewById(R.id.hr);
+//                hr.setText(DataHandler.getInstance().getLastValue());
+//
+////                TextView min = (TextView) findViewById(R.id.min);
+////                min.setText(DataHandler.getInstance().getMin());
+////
+////                TextView avg = (TextView) findViewById(R.id.avg);
+////                avg.setText(DataHandler.getInstance().getAvg());
+////
+////                TextView max = (TextView) findViewById(R.id.max);
+////                max.setText(DataHandler.getInstance().getMax());
+//            }
+//        });
+//    }
 
 }
