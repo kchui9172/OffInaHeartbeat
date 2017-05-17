@@ -36,11 +36,14 @@
         android:layout_marginLeft="25dp" />
 
     <ListView
-        android:id="@+id/lvNewDevices"
+        android:id="@+id/lvSmartDevices"
         android:layout_width="0dp"
         android:layout_height="136dp"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
+
+        tools:layout_constraintBottom_creator="1"
+
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="165dp"
         tools:layout_constraintLeft_creator="1"
@@ -55,14 +58,14 @@
         android:onClick="BTDiscover"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/lvNewDevices"
+        app:layout_constraintBottom_toTopOf="@+id/lvSmartDevices"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent" />
 
 
     <Spinner
-        android:id="@+id/spinner1"
+        android:id="@+id/spinnerSmart"
         android:layout_width="328dp"
         android:layout_height="47dp"
         tools:layout_constraintTop_creator="1"

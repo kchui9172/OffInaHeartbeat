@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Off in a Heartbeat</string>
     <string name="title_activity_smart_device_setup">"Connect Any Smart Appliances "</string>
+    <string name="min">min</string>
+    <string name="avg">avg</string>
+    <string name="max">max</string>
 </resources>

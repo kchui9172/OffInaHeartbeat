@@ -63,6 +63,22 @@ public class DataHandler extends Observable{
         return val;
     }
 
+    public String getMin(){
+        return "Min " + min + " BPM";
+    }
+
+    public String getMax(){
+
+        return "Max " + max + " BPM";
+    }
+
+    public String getAvg(){
+        if(total==0)
+            return "Avg " + 0 + " BPM";
+        return "Avg " + data/total + " BPM";
+    }
+
+
     public void setNewValue(boolean newValue) {
         this.newValue = newValue;
     }

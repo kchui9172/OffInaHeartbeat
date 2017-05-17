@@ -85,7 +85,7 @@ public class ConnectH7  extends Thread{
                     gatt.setCharacteristicNotification(cc,true);//Register to updates
                     descriptor.setValue( BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                     gatt.writeDescriptor(descriptor);
-                    Log.d("ConnectH7", "Connected and regisering to info");
+                    Log.d("ConnectH7", "Connected and registering to info");
                 }
             }
         }
