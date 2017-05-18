@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.androidplot.Plot;
@@ -48,7 +49,7 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
         DataHandler.getInstance().setNewValue(false);
 
         //LOAD Graph
-        LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.rgb(0, 0, 255), Color.rgb(200, 200, 200), null, null);
+        LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.argb(255,255, 64, 129), null, null, null);
         //series1Format.setPointLabelFormatter(new PointLabelFormatter());
         series1Format.getLinePaint().setStrokeJoin(Paint.Join.ROUND);
         series1Format.getLinePaint().setStrokeWidth(10);
@@ -56,6 +57,8 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
         //dynamicPlot.setTicksPerRangeLabel(3);
         //dynamicPlot.getGraphWidget().setDomainLabelOrientation(-45);
 
+        dynamicPlot.getGraph().getGridBackgroundPaint().setColor(Color.argb(255,212,212,212));
+        dynamicPlot.getGraph().getBackgroundPaint().setColor(Color.argb(255,47,50,122));
 
         // getInstance and position datasets:
 //
@@ -65,7 +68,7 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
 //        formatter1.getLinePaint().setStrokeWidth(10);
 //        dynamicPlot.addSeries(sine1Series,
 //                formatter1);
-        
+
 
         // thin out domain tick labels so they dont overlap each other:
 //        dynamicPlot.setDomainStepMode(StepMode.INCREMENT_BY_VAL);

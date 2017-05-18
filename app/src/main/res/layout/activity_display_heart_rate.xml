@@ -63,6 +63,7 @@ tools:context="com.example.nikhil.offinaheartbeat.DisplayHeartRate">
         android:textSize="20sp" />
 
     <com.androidplot.xy.XYPlot
+        style="@style/APDefacto"
         android:id="@+id/dynamicPlot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
