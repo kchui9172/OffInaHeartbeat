@@ -1,9 +1,8 @@
 package com.example.nikhil.offinaheartbeat;
 
 import android.support.v7.app.AppCompatActivity;
-
-import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.Observable;
 import java.util.Observer;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -11,23 +10,15 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-
-import com.androidplot.Plot;
-import com.androidplot.util.PixelUtils;
-import com.androidplot.xy.XYSeries;
-import com.androidplot.xy.*;
-
 import java.util.Observable;
 
-import static android.R.attr.data;
-
+import com.androidplot.util.PixelUtils;
+import com.androidplot.xy.*;
 
 
 public class DisplayHeartRate extends AppCompatActivity implements Observer {
 
     private XYPlot dynamicPlot;
-    private Thread myThread;
-
     private boolean turnedOffTV;
     private boolean dimmedLight; //once flip, won't change once get out of range?
     private int MAX_SIZE = 20; //max size of graph
@@ -114,6 +105,7 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                 TextView max = (TextView) findViewById(R.id.max);
                 max.setText(DataHandler.getInstance().getMax());
 
+                //if heart rate drops past certain point, start dimming lights
                 if (DataHandler.getInstance().getAvgVal() <= 70){
                     TextView change = (TextView) findViewById(R.id.changeNotification);
                     change.setText("Dimming lights now");

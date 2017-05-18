@@ -25,6 +25,54 @@
         <!--app:layout_constraintHorizontal_bias="0.0"-->
         <!--app:layout_constraintVertical_bias="0.0" />-->
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose a Paired Device"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="25dp"
+        app:layout_constraintLeft_toLeftOf="@+id/btnFindDevices"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/lvNewDevices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFindDevices" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="328dp"
+        android:layout_height="47dp"
+        android:backgroundTint="@color/colorAccent"
+        android:backgroundTintMode="add"
+
+        android:layout_marginStart="44dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginRight="44dp"
+        android:layout_marginTop="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.0" />
+
     <Button
         android:id="@+id/btnFindDevices"
         android:layout_width="197dp"
@@ -33,184 +81,9 @@
         android:onClick="BTDiscover"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/lvNewDevices"
-        app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/spinner1"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose a Paired Device"
-        android:layout_marginStart="25dp"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="62dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/btnFindDevices"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="25dp" />
-
-    <ListView
-        android:id="@+id/lvNewDevices"
-        android:layout_width="0dp"
-        android:layout_height="136dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="165dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="328dp"
-        android:layout_height="47dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="44dp"
-        android:layout_marginEnd="44dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="44dp"
-        android:layout_marginRight="44dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginTop="0dp" />
-
-    <!--<TextView-->
-        <!--android:id="@+id/hr"-->
-        <!--android:layout_width="133dp"-->
-        <!--android:layout_height="56dp"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:paddingTop="20dp"-->
-        <!--android:text="BPM"-->
-        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
-        <!--android:textSize="20sp"-->
-        <!--tools:layout_constraintRight_creator="1"-->
-        <!--tools:layout_constraintBottom_creator="1"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--android:layout_marginBottom="12dp" />-->
-
-
-
-    <!--<com.androidplot.xy.XYPlot-->
-        <!--android:id="@+id/dynamicPlot"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--title="Heart Rate" >-->
-    <!--</com.androidplot.xy.XYPlot>-->
-
-
-
-    <!-- added button here: need to change id values etc -->
-    <!--<Button-->
-        <!--android:id="@+id/nextPage"-->
-        <!--android:layout_width="197dp"-->
-        <!--android:layout_height="48dp"-->
-        <!--android:text="Next"-->
-        <!--android:onClick="Next"-->
-        <!--tools:layout_constraintRight_creator="1"-->
-        <!--tools:layout_constraintBottom_creator="1"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:layout_marginRight="16dp" /> -->
-
-
 </android.support.constraint.ConstraintLayout>
-
-
-
-
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--xmlns:tools="http://schemas.android.com/tools"-->
-<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--android:id="@+id/container"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent"-->
-<!--android:orientation="vertical"-->
-<!--tools:layout_editor_absoluteY="81dp"-->
-<!--tools:layout_editor_absoluteX="0dp">-->
-<!--tools:context="com.example.nikhil.offinaheartbeat.MainActivity">-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textView"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Choose a Paired Device" />-->
-
-    <!--<Spinner-->
-        <!--android:id="@+id/spinner1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
-
-    <!--<Button-->
-        <!--android:id="@+id/btnFindDevices"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Discover more Devices"-->
-        <!--android:onClick="BTDiscover" />-->
-
-    <!--<ListView-->
-        <!--android:id="@+id/lvNewDevices"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
-
-
-    <!--<TextView-->
-        <!--android:id="@+id/hr"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:paddingTop="20dp"-->
-        <!--android:text="BPM"-->
-        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
-        <!--android:textColor="@color/bpmLabel"-->
-        <!--android:textSize="70sp" />-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center" >-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/min"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="@string/min" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/avg"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="@string/avg" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/max"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="@string/max" />-->
-    <!--</LinearLayout>-->
-
-    <!--<com.androidplot.xy.XYPlot-->
-        <!--android:id="@+id/dynamicPlot"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--title="Heart Rate">-->
-    <!--</com.androidplot.xy.XYPlot>-->
-
-
-<!--</LinearLayout>-->
