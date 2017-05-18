@@ -1,5 +1,7 @@
 package com.example.nikhil.offinaheartbeat;
 
+import com.androidplot.xy.SimpleXYSeries;
+
 import java.util.Observable;
 
 public class DataHandler extends Observable{
@@ -7,6 +9,7 @@ public class DataHandler extends Observable{
 
     //DATA FOR SAVING
     boolean newValue = true;
+    SimpleXYSeries series1;
     //ConnectThread reader;
     ConnectH7 H7;
 
@@ -78,9 +81,21 @@ public class DataHandler extends Observable{
         return "Avg " + data/total + " BPM";
     }
 
+    public int getAvgVal(){
+        return data/total;
+    }
+
 
     public void setNewValue(boolean newValue) {
         this.newValue = newValue;
+    }
+
+    public SimpleXYSeries getSeries1() {
+        return series1;
+    }
+
+    public void setSeries1(SimpleXYSeries series1) {
+        this.series1 = series1;
     }
 
     public int getID() {
