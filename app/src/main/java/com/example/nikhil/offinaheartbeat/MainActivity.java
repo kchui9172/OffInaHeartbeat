@@ -1,6 +1,7 @@
 package com.example.nikhil.offinaheartbeat;
 
 import android.Manifest;
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;

@@ -4,4 +4,21 @@
     <string name="min">min</string>
     <string name="avg">avg</string>
     <string name="max">max</string>
+
+    <!-- Blaster Found toast -->
+    <string name="toast_found">IR blaster found</string>
+    <!-- Not found dialog -->
+    <string name="blaster_dialog_title">No IR blaster</string>
+    <string name="blaster_dialog_body">In order to turn-off TVs, your phone must have a built-in infrared blaster.</string>
+    <string name="learn_more">Learn more</string>
+    <string name="ok">OK</string>
+    <string name="blaster_dialog_more_blaster_url" translatable="false">https://en.wikipedia.org/wiki/List_of_devices_with_IR_blaster#Smartphones</string>
+
+    <!-- Transmission toast -->
+    <string name="toast_transmission_initiated">Transmitting patterns…</string>
+    <string name="toast_transmission_completed">Transmission completed!</string>
+
+    <!-- Transmission progress-dialog -->
+    <string name="pd_transmission_in_progress">Transmitting patterns</string>
+    <string name="pd_please_wait">Please wait…</string>
 </resources>

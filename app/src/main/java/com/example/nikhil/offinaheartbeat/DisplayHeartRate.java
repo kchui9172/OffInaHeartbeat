@@ -1,5 +1,7 @@
 package com.example.nikhil.offinaheartbeat;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import java.util.Arrays;
 import java.util.Observable;
@@ -10,10 +12,14 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Observable;
 
 import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.*;
+
+import static android.R.attr.button;
 
 
 public class DisplayHeartRate extends AppCompatActivity implements Observer {
@@ -22,13 +28,46 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
     private boolean turnedOffTV;
     private boolean dimmedLight; //once flip, won't change once get out of range?
     private int MAX_SIZE = 20; //max size of graph
-
+//    private static RemoteControl rc = new RemoteControl();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         // android boilerplate stuff
         super.onCreate(savedInstanceState);
+
+        RemoteControl.showWorks();
+
+        final Context context = getApplicationContext();
+        Thread transmit;
+
+        try {
+            //Show a progress dialog and transmit all patterns
+            final ProgressDialog transmittingInfo = getProgressDialog(context);
+            transmit = new Thread() {
+                public void run() {
+                    RemoteControl.kill(context);
+                    transmittingInfo.dismiss();
+                }
+            };
+            transmit.start();
+        }catch (android.view.WindowManager.BadTokenException e) {
+            //Show a toast instead of a progress dialog and transmit all patterns
+            final Toast start = Toast.makeText(context, R.string.toast_transmission_initiated, Toast.LENGTH_LONG);
+            final Toast complete = Toast.makeText(context, R.string.toast_transmission_completed, Toast.LENGTH_SHORT);
+            start.show();
+            transmit = new Thread() {
+                public void run() {
+                    RemoteControl.kill(context);
+                    start.cancel();
+                    complete.show();
+                }
+            };
+            transmit.start();
+        }
+
+
+
         setContentView(R.layout.activity_display_heart_rate);
         DataHandler.getInstance().addObserver(this);
 
@@ -77,6 +116,13 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
         dynamicPlot.getGraph().getDomainGridLinePaint().setPathEffect(dashFx);
         dynamicPlot.getGraph().getRangeGridLinePaint().setPathEffect(dashFx);
     }
+
+
+    //This method returns a ProgressDialog
+    public static ProgressDialog getProgressDialog(Context c) {
+        return ProgressDialog.show(c, c.getString(R.string.pd_transmission_in_progress), c.getString(R.string.pd_please_wait), true, false);
+    }
+
 
     @Override
     public void update(Observable o, Object arg) {

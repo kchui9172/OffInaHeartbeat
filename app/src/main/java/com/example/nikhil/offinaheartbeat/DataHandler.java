@@ -22,6 +22,8 @@ public class DataHandler extends Observable{
     int data=0;
     int total=0;
 
+    int baseline = 0;
+
     int id;
 
     private DataHandler(){
@@ -85,6 +87,14 @@ public class DataHandler extends Observable{
         return data/total;
     }
 
+
+    //FINISH FUNCTION HERE
+    public int getBaseline(){
+        if (total < 100){
+            return 0;
+        }
+        return baseline;
+    }
 
     public void setNewValue(boolean newValue) {
         this.newValue = newValue;
