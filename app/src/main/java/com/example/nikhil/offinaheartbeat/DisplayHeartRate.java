@@ -26,50 +26,22 @@ import static android.R.attr.button;
 public class DisplayHeartRate extends AppCompatActivity implements Observer {
 
     private XYPlot dynamicPlot;
-    private boolean turnedOffTV;
-    private boolean dimmedLight; //once flip, won't change once get out of range?
     private int MAX_SIZE = 20; //max size of graph
-//    private static RemoteControl rc = new RemoteControl();
-
     private boolean baselineSet = false;
+    private int baselineVal = 0;
+
+    //Boolean values to control lighting and tv - once triggered once, don't flip again
+    private boolean isDimmedLight75 = false;
+    private boolean isDimmedLight50 = false;
+    private boolean isDimmedLight25 = false;
+    private boolean isTurnedOffLight = false;
+    private boolean isTurnedOffTV = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         // android boilerplate stuff
         super.onCreate(savedInstanceState);
-
-        RemoteControl.showWorks();
-
-        final Context context = getApplicationContext();
-        Thread transmit;
-
-        try {
-            //Show a progress dialog and transmit all patterns
-            final ProgressDialog transmittingInfo = getProgressDialog(context);
-            transmit = new Thread() {
-                public void run() {
-                    RemoteControl.kill(context);
-                    transmittingInfo.dismiss();
-                }
-            };
-            transmit.start();
-        }catch (android.view.WindowManager.BadTokenException e) {
-            //Show a toast instead of a progress dialog and transmit all patterns
-            final Toast start = Toast.makeText(context, R.string.toast_transmission_initiated, Toast.LENGTH_LONG);
-            final Toast complete = Toast.makeText(context, R.string.toast_transmission_completed, Toast.LENGTH_SHORT);
-            start.show();
-            transmit = new Thread() {
-                public void run() {
-                    RemoteControl.kill(context);
-                    start.cancel();
-                    complete.show();
-                }
-            };
-            transmit.start();
-        }
-
-
 
         setContentView(R.layout.activity_display_heart_rate);
         DataHandler.getInstance().addObserver(this);
@@ -154,24 +126,80 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                 TextView max = (TextView) findViewById(R.id.max);
                 max.setText(DataHandler.getInstance().getMax());
 
-                if (DataHandler.getInstance().getBaselineValue() != 0){
+                //if baseline value not set yet
+                if (baselineSet == false && DataHandler.getInstance().getBaselineValue() != 0){
                     TextView baselineValue = (TextView) findViewById(R.id.baselineHR);
                     baselineValue.setText(DataHandler.getInstance().getBaseline());
                     TextView nextInstruction = (TextView) findViewById(R.id.changeNotification);
                     nextInstruction.setText("Monitoring your heart rate now");
                     baselineSet = true;
+                    baselineVal = DataHandler.getInstance().getBaselineValue();
                 }
 
+                //into deep sleep = drop by 24 bpm
+
+                //once baseline heart rate has been set
                 if (baselineSet){
                     //if heart rate drops past certain point, start dimming lights
-                    if (DataHandler.getInstance().getAvgVal() <= 70){
+                    //once drop by 5 bpm, dim lights to 75%
+                    if (isDimmedLight75 == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 5)){
                         TextView change = (TextView) findViewById(R.id.changeNotification);
-                        change.setText("Dimming lights now");
+                        change.setText("Dimming lights to 75%");
+                        isDimmedLight75 = true;
+                        //ADD CODE TO DIM LIGHTS HERE
+                    }
+                    //if drop by 10 bpm, dim lights to 50%
+                    if (isDimmedLight50 == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 10)){
+                        TextView change = (TextView) findViewById(R.id.changeNotification);
+                        change.setText("Dimming lights to 50%");
+                        isDimmedLight50 = true;
+                        //ADD CODE TO DIM LIGHTS HERE
+                    }
+                    //if drop by 15 bpm, dim lights to 50%
+                    if (isDimmedLight25 == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 15)){
+                        TextView change = (TextView) findViewById(R.id.changeNotification);
+                        change.setText("Dimming lights to 25%");
+                        isDimmedLight25 = true;
+                        //ADD CODE TO DIM LIGHTS HERE
+                    }
+                    //if drop by 20 bpm, turn off lights and turn off tv
+                    if (isTurnedOffLight == false && isTurnedOffTV == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 20)){
+                        TextView change = (TextView) findViewById(R.id.changeNotification);
+                        change.setText("Turning off lights and tv");
+                        isTurnedOffLight = true;
+                        isTurnedOffTV = true;
+                        //ADD CODE TO DIM LIGHTS HERE
+
+                        //Code to turn off tv
+                        final Context context = getApplicationContext();
+                        Thread transmit;
+
+                        try {
+                            //Show a progress dialog and transmit all patterns
+                            final ProgressDialog transmittingInfo = getProgressDialog(context);
+                            transmit = new Thread() {
+                                public void run() {
+                                    RemoteControl.kill(context);
+                                    transmittingInfo.dismiss();
+                                }
+                            };
+                            transmit.start();
+                        }catch (android.view.WindowManager.BadTokenException e) {
+                            //Show a toast instead of a progress dialog and transmit all patterns
+                            final Toast start = Toast.makeText(context, R.string.toast_transmission_initiated, Toast.LENGTH_LONG);
+                            final Toast complete = Toast.makeText(context, R.string.toast_transmission_completed, Toast.LENGTH_SHORT);
+                            start.show();
+                            transmit = new Thread() {
+                                public void run() {
+                                    RemoteControl.kill(context);
+                                    start.cancel();
+                                    complete.show();
+                                }
+                            };
+                            transmit.start();
+                        }
                     }
                 }
-
-
-
             }
         });
     }
