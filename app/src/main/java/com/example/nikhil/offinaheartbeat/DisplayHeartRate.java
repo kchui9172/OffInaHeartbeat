@@ -2,6 +2,7 @@ package com.example.nikhil.offinaheartbeat;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import java.util.Arrays;
 import java.util.Observable;
@@ -29,6 +30,8 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
     private boolean dimmedLight; //once flip, won't change once get out of range?
     private int MAX_SIZE = 20; //max size of graph
 //    private static RemoteControl rc = new RemoteControl();
+
+    private boolean baselineSet = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -151,11 +154,23 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                 TextView max = (TextView) findViewById(R.id.max);
                 max.setText(DataHandler.getInstance().getMax());
 
-                //if heart rate drops past certain point, start dimming lights
-                if (DataHandler.getInstance().getAvgVal() <= 70){
-                    TextView change = (TextView) findViewById(R.id.changeNotification);
-                    change.setText("Dimming lights now");
+                if (DataHandler.getInstance().getBaselineValue() != 0){
+                    TextView baselineValue = (TextView) findViewById(R.id.baselineHR);
+                    baselineValue.setText(DataHandler.getInstance().getBaseline());
+                    TextView nextInstruction = (TextView) findViewById(R.id.changeNotification);
+                    nextInstruction.setText("Monitoring your heart rate now");
+                    baselineSet = true;
                 }
+
+                if (baselineSet){
+                    //if heart rate drops past certain point, start dimming lights
+                    if (DataHandler.getInstance().getAvgVal() <= 70){
+                        TextView change = (TextView) findViewById(R.id.changeNotification);
+                        change.setText("Dimming lights now");
+                    }
+                }
+
+
 
             }
         });

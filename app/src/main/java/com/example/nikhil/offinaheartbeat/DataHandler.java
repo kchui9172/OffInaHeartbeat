@@ -1,5 +1,7 @@
 package com.example.nikhil.offinaheartbeat;
 
+import android.util.Log;
+
 import com.androidplot.xy.SimpleXYSeries;
 
 import java.util.Observable;
@@ -46,9 +48,13 @@ public class DataHandler extends Observable{
 
     public void cleanInput(int i){
         val=i;
+        Log.d("total",String.valueOf(total));
         if(val!=0){
             data+=val;//Average maths
             total++;//Average maths
+        }
+        if (total == 10){
+            setBaseline();
         }
         if(val<min||min==0)
             min=val;
@@ -69,18 +75,18 @@ public class DataHandler extends Observable{
     }
 
     public String getMin(){
-        return "Min " + min + " BPM";
+        return "Min: " + min;
     }
 
     public String getMax(){
 
-        return "Max " + max + " BPM";
+        return "Max: " + max;
     }
 
     public String getAvg(){
         if(total==0)
             return "Avg " + 0 + " BPM";
-        return "Avg " + data/total + " BPM";
+        return "Avg: " + data/total;
     }
 
     public int getAvgVal(){
@@ -89,10 +95,16 @@ public class DataHandler extends Observable{
 
 
     //FINISH FUNCTION HERE
-    public int getBaseline(){
-        if (total < 100){
-            return 0;
-        }
+    public void setBaseline(){
+        baseline = data/total;
+        Log.d("baseline","baseline");
+    }
+
+    public String getBaseline(){
+        return "Baseline: " + baseline;
+    }
+
+    public int getBaselineValue(){
         return baseline;
     }
 

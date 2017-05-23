@@ -49,6 +49,15 @@ tools:context="com.example.nikhil.offinaheartbeat.DisplayHeartRate">
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/max" />
+
+    <TextView
+        android:id="@+id/baselineHR"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Baseline"/>
+
 </LinearLayout>
 
     <TextView
@@ -57,7 +66,7 @@ tools:context="com.example.nikhil.offinaheartbeat.DisplayHeartRate">
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingTop="20dp"
-        android:text=""
+        android:text="Getting Baseline Heartrate..."
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/changeNotificationLabel"
         android:textSize="20sp" />
@@ -74,5 +83,6 @@ tools:context="com.example.nikhil.offinaheartbeat.DisplayHeartRate">
         ap:marginLeft="10dp"
         ap:marginRight="10dp">
     </com.androidplot.xy.XYPlot>
+
 
 </LinearLayout>
