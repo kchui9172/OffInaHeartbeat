@@ -1,6 +1,7 @@
 package com.example.nikhil.offinaheartbeat;
 
 import android.Manifest;
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -21,12 +22,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Observable;
-import java.util.Observer;
+
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnItemSelectedListener, Observer  {
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnItemSelectedListener {
     private static final String TAG = "MainActivity";
 
     BluetoothAdapter mBluetoothAdapter;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     boolean H7 = false;
     private Spinner spinner1;
 
+    //Turn Bluetooth on/off automatically
     private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -66,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      * Broadcast Receiver for listing devices that are not yet paired
      * -Executed by btnDiscover() method.
      */
+    //From btnDiscover() look for unpaired devices
     private BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -131,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         unregisterReceiver(mBroadcastReceiver1);
         unregisterReceiver(mBroadcastReceiver3);
         unregisterReceiver(mBroadcastReceiver4);
-        DataHandler.getInstance().deleteObserver(this);
+        //DataHandler.getInstance().deleteObserver(this);
     }
 
     @Override
@@ -139,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "Starting Off in a Heartbeat Application.");
-        DataHandler.getInstance().addObserver(this);
+        //DataHandler.getInstance().addObserver(this);
 
         lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);
         mBTDevices = new ArrayList<>();
@@ -164,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }*/
 
+        //check if Bluetooth on, if not, show pop up to turn on
         if (mBluetoothAdapter != null) {
             if (!mBluetoothAdapter.isEnabled()) {
                 Log.d(TAG, "enableDisableBT: enabling BT.");
@@ -176,11 +183,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         populateSpinner();
-
-
     }
 
     public void populateSpinner() {
+        Log.d(TAG,"populate spinner");
         final List<String> list = new ArrayList<>();
         list.add("");
         pairedDevices.addAll(mBluetoothAdapter.getBondedDevices());
@@ -219,6 +225,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    //When press Discover more Devices button
     public void BTDiscover(View view) {
         Log.d(TAG, "btnDiscover: Looking for unpaired devices.");
         if(mBluetoothAdapter.isDiscovering()){
@@ -263,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
+    //select device to connect to on drop down
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //first cancel discovery because its very memory intensive.
         mBluetoothAdapter.cancelDiscovery();
@@ -298,17 +306,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Log.i("Main Activity", "Starting h7");
                 DataHandler.getInstance().setH7(new ConnectH7((BluetoothDevice) pairedDevices.toArray()[DataHandler.getInstance().getID() - 1], this));
                 H7 = true;
+                Log.i(TAG,"starting to receive data");
+
+                //Once start receiving data, should  go to new activity
+                Intent intent = new Intent(this, DisplayHeartRate.class);
+                startActivity(intent);
             }
 
         }
         //This is for terminating process if we switch options
-        /*else {
-            if (H7) {
-                Log.i("Main Activity", "Disabling h7");
-                DataHandler.getInstance().getH7().cancel();
-                DataHandler.getInstance().setH7(null);
-            }
-        }*/
+//        else {
+//            if (H7) {
+//                Log.i("Main Activity", "Disabling h7");
+//                DataHandler.getInstance().getH7().cancel();
+//                DataHandler.getInstance().setH7(null);
+//            }
+//        }
 
     }
 
@@ -317,17 +330,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void update(Observable observable, Object data) {
-        receiveData();
-    }
-
-    public void receiveData() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                TextView hr = (TextView) findViewById(R.id.hr);
-                hr.setText(DataHandler.getInstance().getLastValue());
-            }
-        });
-    }
+//    public void update(Observable observable, Object data) {
+//        receiveData();
+//    }
+//
+//    public void receiveData() {
+//        runOnUiThread(new Runnable() {
+//            public void run() {
+//                TextView hr = (TextView) findViewById(R.id.hr);
+//                hr.setText(DataHandler.getInstance().getLastValue());
+//
+////                TextView min = (TextView) findViewById(R.id.min);
+////                min.setText(DataHandler.getInstance().getMin());
+////
+////                TextView avg = (TextView) findViewById(R.id.avg);
+////                avg.setText(DataHandler.getInstance().getAvg());
+////
+////                TextView max = (TextView) findViewById(R.id.max);
+////                max.setText(DataHandler.getInstance().getMax());
+//            }
+//        });
+//    }
 
 }

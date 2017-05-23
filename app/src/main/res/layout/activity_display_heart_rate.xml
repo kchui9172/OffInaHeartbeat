@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+xmlns:ap="http://schemas.android.com/apk/res-auto"
+android:id="@+id/container"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:layout_editor_absoluteY="81dp"
+tools:layout_editor_absoluteX="0dp">
+tools:context="com.example.nikhil.offinaheartbeat.DisplayHeartRate">
+
+
+<TextView
+    android:id="@+id/hr"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:paddingTop="20dp"
+    android:text="BPM"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:textColor="@color/bpmLabel"
+    android:textSize="70sp" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center" >
+
+    <TextView
+        android:id="@+id/min"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/min" />
+
+    <TextView
+        android:id="@+id/avg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/avg" />
+
+    <TextView
+        android:id="@+id/max"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/max" />
+
+    <TextView
+        android:id="@+id/baselineHR"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Baseline"/>
+
+</LinearLayout>
+
+    <TextView
+        android:id="@+id/changeNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="20dp"
+        android:text="Getting Baseline Heartrate..."
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/changeNotificationLabel"
+        android:textSize="20sp" />
+
+    <com.androidplot.xy.XYPlot
+        style="@style/APDefacto"
+        android:id="@+id/dynamicPlot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        ap:marginTop="10dp"
+        ap:marginBottom="10dp"
+        ap:marginLeft="10dp"
+        ap:marginRight="10dp">
+    </com.androidplot.xy.XYPlot>
+
+
+</LinearLayout>

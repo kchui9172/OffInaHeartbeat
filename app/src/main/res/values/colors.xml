@@ -3,5 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="gray">#444440</color>
+    <color name="gray">#7b7b76</color>
+    <color name="bpmLabel">#FF4081</color>
+    <color name="changeNotificationLabel">#2e2e2e</color>
 </resources>

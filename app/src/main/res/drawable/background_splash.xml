@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:drawable="@color/gray"/>
+    <!-- background texture -->
+    <item>
+        <bitmap
+            android:src="@drawable/paper_2"
+            android:tileMode="repeat" />
 
+    </item>
+
+    <!-- logo -->
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/logo" />
     </item>
 
 </layer-list>

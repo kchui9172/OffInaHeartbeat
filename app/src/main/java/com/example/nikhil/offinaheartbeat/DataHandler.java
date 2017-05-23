@@ -1,5 +1,9 @@
 package com.example.nikhil.offinaheartbeat;
 
+import android.util.Log;
+
+import com.androidplot.xy.SimpleXYSeries;
+
 import java.util.Observable;
 
 public class DataHandler extends Observable{
@@ -7,6 +11,7 @@ public class DataHandler extends Observable{
 
     //DATA FOR SAVING
     boolean newValue = true;
+    SimpleXYSeries series1;
     //ConnectThread reader;
     ConnectH7 H7;
 
@@ -18,6 +23,8 @@ public class DataHandler extends Observable{
     //for the average maths
     int data=0;
     int total=0;
+
+    int baseline = 0;
 
     int id;
 
@@ -41,9 +48,13 @@ public class DataHandler extends Observable{
 
     public void cleanInput(int i){
         val=i;
+        Log.d("total",String.valueOf(total));
         if(val!=0){
             data+=val;//Average maths
             total++;//Average maths
+        }
+        if (total == 10){
+            setBaseline();
         }
         if(val<min||min==0)
             min=val;
@@ -63,8 +74,50 @@ public class DataHandler extends Observable{
         return val;
     }
 
+    public String getMin(){
+        return "Min: " + min;
+    }
+
+    public String getMax(){
+
+        return "Max: " + max;
+    }
+
+    public String getAvg(){
+        if(total==0)
+            return "Avg " + 0 + " BPM";
+        return "Avg: " + data/total;
+    }
+
+    public int getAvgVal(){
+        return data/total;
+    }
+
+
+    //FINISH FUNCTION HERE
+    public void setBaseline(){
+        baseline = data/total;
+        Log.d("baseline","baseline");
+    }
+
+    public String getBaseline(){
+        return "Baseline: " + baseline;
+    }
+
+    public int getBaselineValue(){
+        return baseline;
+    }
+
     public void setNewValue(boolean newValue) {
         this.newValue = newValue;
+    }
+
+    public SimpleXYSeries getSeries1() {
+        return series1;
+    }
+
+    public void setSeries1(SimpleXYSeries series1) {
+        this.series1 = series1;
     }
 
     public int getID() {
