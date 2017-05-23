@@ -41,7 +41,7 @@
         android:layout_width="197dp"
         android:layout_height="48dp"
         android:text="Discover more Devices"
-        android:onClick="BTDiscover"
+        android:onClick="controlLights"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
