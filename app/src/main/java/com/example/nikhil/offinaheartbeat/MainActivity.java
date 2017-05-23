@@ -23,9 +23,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.philips.lighting.hue.listener.PHLightListener;
+import com.philips.lighting.hue.sdk.PHHueSDK;
+import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHBridgeResource;
+import com.philips.lighting.model.PHHueError;
+import com.philips.lighting.model.PHLight;
+import com.philips.lighting.model.PHLightState;
+
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
@@ -40,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ListView lvNewDevices;
     boolean H7 = false;
     private Spinner spinner1;
+
+    private PHHueSDK phHueSDK;
 
     //Turn Bluetooth on/off automatically
     private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
@@ -147,6 +158,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Log.d(TAG, "Starting Off in a Heartbeat Application.");
         //DataHandler.getInstance().addObserver(this);
 
+        phHueSDK = phHueSDK.create();
+
         lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);
         mBTDevices = new ArrayList<>();
 
@@ -248,6 +261,44 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             registerReceiver(mBroadcastReceiver3, discoverDevicesIntent);
         }
     }
+
+    public void controlLights(View view) {
+        PHBridge bridge = phHueSDK.getSelectedBridge();
+
+        List<PHLight> allLights = bridge.getResourceCache().getAllLights();
+
+        for (PHLight light : allLights) {
+            PHLightState lightstate = new PHLightState();
+            lightstate.setOn(false);
+
+            bridge.updateLightState(light, lightstate, listener);
+        }
+    }
+
+    // If you want to handle the response from the bridge, create a PHLightListener object.
+    PHLightListener listener = new PHLightListener() {
+
+        @Override
+        public void onSuccess() {
+        }
+
+        @Override
+        public void onStateUpdate(Map<String, String> arg0, List<PHHueError> arg1) {
+            Log.w(TAG, "Light has updated");
+        }
+
+        @Override
+        public void onError(int arg0, String arg1) {}
+
+        @Override
+        public void onReceivingLightDetails(PHLight arg0) {}
+
+        @Override
+        public void onReceivingLights(List<PHBridgeResource> arg0) {}
+
+        @Override
+        public void onSearchComplete() {}
+    };
 
     /**
      * This method is required for all devices running API23+

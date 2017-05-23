@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.nikhil.offinaheartbeat.MainActivity"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="com.example.nikhil.offinaheartbeat.MainActivity"
+tools:layout_editor_absoluteY="81dp"
+tools:layout_editor_absoluteX="0dp">
 
-    <Button
+<Button
     android:id="@+id/nextPage"
     android:layout_width="197dp"
     android:layout_height="48dp"
@@ -22,179 +22,48 @@
     android:layout_marginBottom="16dp"
     android:layout_marginRight="16dp" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose a Device"
-        android:layout_marginStart="25dp"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="62dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/btnFindDevices"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="25dp" />
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Choose a Device"
+    android:layout_marginStart="25dp"
+    tools:layout_constraintTop_creator="1"
+    android:layout_marginTop="62dp"
+    tools:layout_constraintLeft_creator="1"
+    app:layout_constraintLeft_toLeftOf="@+id/btnFindDevices"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginLeft="25dp" />
 
     <ListView
-        android:id="@+id/lvSmartDevices"
-        android:layout_width="0dp"
-        android:layout_height="136dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
+        android:id="@+id/bridge_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:focusable="true"
+        android:choiceMode="singleChoice"
+        android:dividerHeight="3sp"
+        android:layout_marginLeft="2dip"
+        android:layout_marginRight="2dip"
+        android:layout_marginTop="3dip" >
+    </ListView>
 
-        tools:layout_constraintBottom_creator="1"
-
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="165dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnFindDevices"
-        android:layout_width="197dp"
-        android:layout_height="48dp"
-        android:text="Discover more Devices"
-        android:onClick="BTDiscover"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/lvSmartDevices"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-
-    <Spinner
-        android:id="@+id/spinnerSmart"
-        android:layout_width="328dp"
-        android:layout_height="47dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="44dp"
-        android:layout_marginEnd="44dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="44dp"
-        android:layout_marginRight="44dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginTop="0dp" />
-
-        <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:srcCompat="@android:drawable/ic_media_play"-->
-        <!--tools:layout_constraintRight_creator="1"-->
-        <!--tools:layout_constraintBottom_creator="1"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:layout_marginRight="16dp" />-->
+<Button
+    android:id="@+id/btnFindDevices"
+    android:layout_width="197dp"
+    android:layout_height="48dp"
+    android:text="Discover more Devices"
+    android:onClick="doBridgeSearch"
+    tools:layout_constraintRight_creator="1"
+    tools:layout_constraintBottom_creator="1"
+    app:layout_constraintBottom_toTopOf="@+id/lvSmartDevices"
+    app:layout_constraintRight_toRightOf="parent"
+    tools:layout_constraintLeft_creator="1"
+    app:layout_constraintLeft_toLeftOf="parent" />
 
 
 
 
 </android.support.constraint.ConstraintLayout>
-
-
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--tools:context="com.example.nikhil.offinaheartbeat.SmartDeviceSetup">-->
-
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/appBarLayout"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="?attr/actionBarSize"-->
-        <!--android:background="?attr/colorPrimary"-->
-        <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
-        <!--tools:layout_constraintTop_creator="1"-->
-        <!--tools:layout_constraintRight_creator="1"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--tools:layout_constraintLeft_creator="1"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--android:layout_marginLeft="8dp"-->
-        <!--android:layout_marginRight="8dp" />-->
-
-        <!--<include-->
-        <!--layout="@layout/content_smart_device_setup"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_width="0dp"-->
-        <!--tools:layout_constraintTop_creator="1"-->
-        <!--tools:layout_constraintRight_creator="1"-->
-        <!--tools:layout_constraintBottom_creator="1"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/appBarLayout"-->
-        <!--tools:layout_constraintLeft_creator="1"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent" />-->
-
-        <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:srcCompat="@android:drawable/ic_media_play"-->
-        <!--tools:layout_constraintRight_creator="1"-->
-        <!--tools:layout_constraintBottom_creator="1"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:layout_marginRight="16dp" />-->
-
-
-    <!--<EditText-->
-        <!--android:id="@+id/editText"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="16dp"-->
-        <!--android:layout_marginRight="0dp"-->
-        <!--android:layout_marginTop="16dp"-->
-        <!--android:hint="@string/edit_message"-->
-        <!--android:inputType="textPersonName"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintRight_toLeftOf="@+id/button"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--<Button-->
-        <!--android:id="@+id/button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="16dp"-->
-        <!--android:layout_marginRight="16dp"-->
-        <!--android:text="@string/button_send"-->
-        <!--app:layout_constraintBaseline_toBaselineOf="@+id/editText"-->
-        <!--app:layout_constraintLeft_toRightOf="@+id/editText"-->
-        <!--app:layout_constraintRight_toRightOf="parent" />-->
-
-
-
-
-    <!--<TextView-->
-        <!--android:id="@+id/textView2"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Connect Devices Hereeeee"-->
-        <!--tools:layout_editor_absoluteX="122dp"-->
-        <!--tools:layout_editor_absoluteY="131dp" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/textView1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="I&apos;m screen 1 (main.xml)"-->
-    <!--android:textAppearance="?android:attr/textAppearanceLarge" />-->
-
-<!--</android.support.constraint.ConstraintLayout>-->
-
 
