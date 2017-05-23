@@ -30,7 +30,7 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
     private boolean baselineSet = false;
     private int baselineVal = 0;
 
-    //Boolean values to control lighting and tv
+    //Boolean values to control lighting and tv - once triggered once, don't flip again
     private boolean isDimmedLight75 = false;
     private boolean isDimmedLight50 = false;
     private boolean isDimmedLight25 = false;
@@ -142,32 +142,35 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                 if (baselineSet){
                     //if heart rate drops past certain point, start dimming lights
                     //once drop by 5 bpm, dim lights to 75%
-                    if (DataHandler.getInstance().getAvgVal() <= (baselineVal - 5)){
+                    if (isDimmedLight75 == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 5)){
                         TextView change = (TextView) findViewById(R.id.changeNotification);
                         change.setText("Dimming lights to 75%");
+                        isDimmedLight75 = true;
                         //ADD CODE TO DIM LIGHTS HERE
                     }
                     //if drop by 10 bpm, dim lights to 50%
-                    if (DataHandler.getInstance().getAvgVal() <= (baselineVal - 10)){
+                    if (isDimmedLight50 == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 10)){
                         TextView change = (TextView) findViewById(R.id.changeNotification);
                         change.setText("Dimming lights to 50%");
+                        isDimmedLight50 = true;
                         //ADD CODE TO DIM LIGHTS HERE
                     }
                     //if drop by 15 bpm, dim lights to 50%
-                    if (DataHandler.getInstance().getAvgVal() <= (baselineVal - 15)){
+                    if (isDimmedLight25 == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 15)){
                         TextView change = (TextView) findViewById(R.id.changeNotification);
                         change.setText("Dimming lights to 25%");
+                        isDimmedLight25 = true;
                         //ADD CODE TO DIM LIGHTS HERE
                     }
                     //if drop by 20 bpm, turn off lights and turn off tv
-                    if (DataHandler.getInstance().getAvgVal() <= (baselineVal - 20)){
+                    if (isTurnedOffLight == false && isTurnedOffTV == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 20)){
                         TextView change = (TextView) findViewById(R.id.changeNotification);
                         change.setText("Turning off lights and tv");
+                        isTurnedOffLight = true;
+                        isTurnedOffTV = true;
                         //ADD CODE TO DIM LIGHTS HERE
 
                         //Code to turn off tv
-                        //RemoteControl.showWorks();
-
                         final Context context = getApplicationContext();
                         Thread transmit;
 
