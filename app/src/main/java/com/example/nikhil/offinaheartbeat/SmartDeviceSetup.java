@@ -43,6 +43,7 @@ import com.example.nikhil.offinaheartbeat.R;
 import com.example.nikhil.offinaheartbeat.data.AccessPointListAdapter;
 import com.example.nikhil.offinaheartbeat.data.HueSharedPreferences;
 import com.example.nikhil.offinaheartbeat.quickstart.PHHomeActivity;
+import com.example.nikhil.offinaheartbeat.quickstart.PHPushlinkActivity;
 import com.example.nikhil.offinaheartbeat.quickstart.PHWizardAlertDialog;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
@@ -195,8 +196,10 @@ public class SmartDeviceSetup extends AppCompatActivity implements OnItemClickLi
         public void onAuthenticationRequired(PHAccessPoint accessPoint) {
             Log.w(TAG, "Authentication Required.");
             phHueSDK.startPushlinkAuthentication(accessPoint);
-            //startActivity(new Intent(PHHomeActivity.this, PHPushlinkActivity.class));
+            //startActivity(new Intent(this, PHPushlinkActivity.class));
 
+            Intent intent = new Intent(getApplicationContext(), com.example.nikhil.offinaheartbeat.quickstart.PHPushlinkActivity.class);
+            startActivity(intent);
         }
 
         @Override

@@ -114,14 +114,20 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
     }
 
 
-    public void controlLights() {
+    public void controlLights(int dimValue) {
         PHBridge bridge = phHueSDK.getSelectedBridge();
 
         List<PHLight> allLights = bridge.getResourceCache().getAllLights();
 
         for (PHLight light : allLights) {
             PHLightState lightstate = new PHLightState();
-            lightstate.setOn(false);
+            //lightstate.setOn(false);
+            if (dimValue == 0){
+                lightstate.setOn(false);
+            }
+            else{
+                lightstate.setBrightness(dimValue);
+            }
 
             bridge.updateLightState(light, lightstate, listener);
         }
@@ -193,13 +199,13 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
 
                 //once baseline heart rate has been set
                 if (baselineSet){
-                    controlLights();
                     //if heart rate drops past certain point, start dimming lights
                     //once drop by 5 bpm, dim lights to 75%
                     if (isDimmedLight75 == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 5)){
                         TextView change = (TextView) findViewById(R.id.changeNotification);
                         change.setText("Dimming lights to 75%");
                         isDimmedLight75 = true;
+                        controlLights(191);
                         //ADD CODE TO DIM LIGHTS HERE
                     }
                     //if drop by 10 bpm, dim lights to 50%
@@ -207,6 +213,7 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                         TextView change = (TextView) findViewById(R.id.changeNotification);
                         change.setText("Dimming lights to 50%");
                         isDimmedLight50 = true;
+                        controlLights(127);
                         //ADD CODE TO DIM LIGHTS HERE
                     }
                     //if drop by 15 bpm, dim lights to 50%
@@ -214,6 +221,7 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                         TextView change = (TextView) findViewById(R.id.changeNotification);
                         change.setText("Dimming lights to 25%");
                         isDimmedLight25 = true;
+                        controlLights(64);
                         //ADD CODE TO DIM LIGHTS HERE
                     }
                     //if drop by 20 bpm, turn off lights and turn off tv
@@ -223,6 +231,7 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                         isTurnedOffLight = true;
                         isTurnedOffTV = true;
                         //ADD CODE TO DIM LIGHTS HERE
+                        controlLights(0);
 
                         //Code to turn off tv
                         final Context context = getApplicationContext();
