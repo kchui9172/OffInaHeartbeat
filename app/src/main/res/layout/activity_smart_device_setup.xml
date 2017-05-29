@@ -8,62 +8,66 @@ tools:context="com.example.nikhil.offinaheartbeat.MainActivity"
 tools:layout_editor_absoluteY="81dp"
 tools:layout_editor_absoluteX="0dp">
 
-<Button
-    android:id="@+id/nextPage"
-    android:layout_width="197dp"
-    android:layout_height="48dp"
-    android:text="Next"
-    android:onClick="Next"
-    tools:layout_constraintRight_creator="1"
-    tools:layout_constraintBottom_creator="1"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:layout_marginEnd="16dp"
-    app:layout_constraintRight_toRightOf="parent"
-    android:layout_marginBottom="16dp"
-    android:layout_marginRight="16dp" />
+    <Button
+        android:id="@+id/nextPage"
+        android:layout_width="197dp"
+        android:layout_height="48dp"
+        android:text="Next"
+        android:onClick="Next"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp" />
 
-<TextView
-    android:id="@+id/textView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Choose a Device"
-    android:layout_marginStart="25dp"
-    tools:layout_constraintTop_creator="1"
-    android:layout_marginTop="62dp"
-    tools:layout_constraintLeft_creator="1"
-    app:layout_constraintLeft_toLeftOf="@+id/btnFindDevices"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_marginLeft="25dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Connect to Bridge"
+        android:textAlignment="center"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <ListView
         android:id="@+id/bridge_list"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginTop="15dp"
         android:cacheColorHint="#00000000"
         android:focusable="true"
         android:choiceMode="singleChoice"
         android:dividerHeight="3sp"
-        android:layout_marginLeft="2dip"
-        android:layout_marginRight="2dip"
-        android:layout_marginTop="3dip" >
-    </ListView>
 
-<Button
-    android:id="@+id/btnFindDevices"
-    android:layout_width="197dp"
-    android:layout_height="48dp"
-    android:text="Discover more Devices"
-    android:onClick="doBridgeSearch"
-    tools:layout_constraintRight_creator="1"
-    tools:layout_constraintBottom_creator="1"
-    app:layout_constraintBottom_toTopOf="@+id/lvSmartDevices"
-    app:layout_constraintRight_toRightOf="parent"
-    tools:layout_constraintLeft_creator="1"
-    app:layout_constraintLeft_toLeftOf="parent" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFindBridge" />
 
 
-
+    <Button
+        android:id="@+id/btnFindBridge"
+        android:layout_width="197dp"
+        android:layout_height="48dp"
+        android:text="Find New Bridge"
+        android:onClick="doBridgeSearch"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="20dp" />
 
 </android.support.constraint.ConstraintLayout>
 

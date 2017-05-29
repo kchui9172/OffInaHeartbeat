@@ -5,6 +5,8 @@ import android.content.Context;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import android.graphics.Color;
@@ -12,6 +14,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +22,13 @@ import java.util.Observable;
 
 import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.*;
+import com.philips.lighting.hue.listener.PHLightListener;
+import com.philips.lighting.hue.sdk.PHHueSDK;
+import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHBridgeResource;
+import com.philips.lighting.model.PHHueError;
+import com.philips.lighting.model.PHLight;
+import com.philips.lighting.model.PHLightState;
 
 import static android.R.attr.button;
 
@@ -37,6 +47,8 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
     private boolean isTurnedOffLight = false;
     private boolean isTurnedOffTV = false;
 
+    private PHHueSDK phHueSDK;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -45,6 +57,9 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
 
         setContentView(R.layout.activity_display_heart_rate);
         DataHandler.getInstance().addObserver(this);
+
+        //to control lights
+        phHueSDK = phHueSDK.create();
 
         // get handles to our View defined in layout.xml:
         dynamicPlot = (XYPlot) findViewById(R.id.dynamicPlot);
@@ -99,6 +114,44 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
     }
 
 
+    public void controlLights() {
+        PHBridge bridge = phHueSDK.getSelectedBridge();
+
+        List<PHLight> allLights = bridge.getResourceCache().getAllLights();
+
+        for (PHLight light : allLights) {
+            PHLightState lightstate = new PHLightState();
+            lightstate.setOn(false);
+
+            bridge.updateLightState(light, lightstate, listener);
+        }
+    }
+
+    // If you want to handle the response from the bridge, create a PHLightListener object.
+    PHLightListener listener = new PHLightListener() {
+
+        @Override
+        public void onSuccess() {
+        }
+
+        @Override
+        public void onStateUpdate(Map<String, String> arg0, List<PHHueError> arg1) {
+            Log.w("tag", "Light has updated");
+        }
+
+        @Override
+        public void onError(int arg0, String arg1) {}
+
+        @Override
+        public void onReceivingLightDetails(PHLight arg0) {}
+
+        @Override
+        public void onReceivingLights(List<PHBridgeResource> arg0) {}
+
+        @Override
+        public void onSearchComplete() {}
+    };
+
     @Override
     public void update(Observable o, Object arg) {
         receiveData();
@@ -140,6 +193,7 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
 
                 //once baseline heart rate has been set
                 if (baselineSet){
+                    controlLights();
                     //if heart rate drops past certain point, start dimming lights
                     //once drop by 5 bpm, dim lights to 75%
                     if (isDimmedLight75 == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 5)){

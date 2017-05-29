@@ -30,7 +30,6 @@
 
         <activity
             android:name=".SmartDeviceSetup"
-            android:label="@string/title_activity_smart_device_setup"
             android:screenOrientation="portrait">
 
             <!-- android:theme="@style/AppTheme.NoActionBar"> -->
