@@ -2,12 +2,15 @@ package com.example.nikhil.offinaheartbeat;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 
 import java.util.Arrays;
 
 /**
  * Created by kchui on 5/21/17.
+ */
+
+/**
+ * Pattern class to hold IR patterns to transmit
  */
 
 public class Pattern {
@@ -17,11 +20,9 @@ public class Pattern {
 
     //This method converts the remotes pattern, if this has not been done yet, and passes the converted pattern to the initiate-method.
     public void send(Context c) {
-        //Log.d("in pattern","send function");
         if (!converted) {
             pattern = convert(pattern, frequency);
             converted = true;
-            //Log.d("converted","CONVERTED");
         }
         initiate(c);
     }
@@ -29,7 +30,6 @@ public class Pattern {
     //This method initiates the remote's transmission.
     private void initiate(Context c) {
         Transmitter remote = new Transmitter(frequency, pattern);
-        //Log.d("created transmitter","transmitter");
         remote.transmit(c);
     }
 
@@ -44,7 +44,7 @@ public class Pattern {
         this.pattern= Arrays.copyOfRange(ircode, 1, ircode.length);
     }
     /*
-* The following method preforms calculations on the IR-codes in order to make them work on certain devices.
+* The following method performs calculations on the IR-codes in order to make them work on certain devices.
 *
 * Patterns have to be converted on devices running on Android Lollipop or newer and HTC devices.
 * Certain Samsung devices also require a converted PAttern,depending on their Android version.

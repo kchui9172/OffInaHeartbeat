@@ -5,12 +5,9 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ProgressBar;
 
-import com.example.nikhil.offinaheartbeat.MainActivity;
 import com.example.nikhil.offinaheartbeat.R;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -20,11 +17,8 @@ import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHHueParsingError;
 
 /**
- * Activity which gives hint for manual pushlink. needs to add <activity
- * android:theme="@android:style/Theme.Dialog" /> in manifest file
- *
- *
- */
+ * Activity to inform user to push button on bridge to connect
+ **/
 
 public class PHPushlinkActivity extends Activity {
     private ProgressBar pbar;
@@ -62,16 +56,10 @@ public class PHPushlinkActivity extends Activity {
         public void onAccessPointsFound(List<PHAccessPoint> arg0) {}
 
         @Override
-        public void onAuthenticationRequired(PHAccessPoint arg0) {
-            //Log.w("meow","here in authentication");
-        }
+        public void onAuthenticationRequired(PHAccessPoint arg0) {}
 
         @Override
-        public void onBridgeConnected(PHBridge bridge, String username) {
-            //Log.w("wow","connected");
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        }
+        public void onBridgeConnected(PHBridge bridge, String username) {}
 
         @Override
         public void onCacheUpdated(List<Integer> arg0, PHBridge bridge) {}

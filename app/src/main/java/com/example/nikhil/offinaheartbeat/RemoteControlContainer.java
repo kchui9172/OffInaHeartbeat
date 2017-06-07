@@ -4,6 +4,10 @@ package com.example.nikhil.offinaheartbeat;
  * Created by kchui on 5/21/17.
  */
 
+/**
+ * RemoteControlContainer class contains IR patterns for turning off popular TV branchs
+ */
+
 public class RemoteControlContainer {
     private static RemoteControl sony = new RemoteControl(
             "sony",

@@ -1,48 +1,25 @@
 package com.example.nikhil.offinaheartbeat;
 
 import android.app.AlertDialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.hardware.ConsumerIrManager;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-
-import java.util.List;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
-import com.example.nikhil.offinaheartbeat.R;
+
 import com.example.nikhil.offinaheartbeat.data.AccessPointListAdapter;
 import com.example.nikhil.offinaheartbeat.data.HueSharedPreferences;
-import com.example.nikhil.offinaheartbeat.quickstart.PHHomeActivity;
 import com.example.nikhil.offinaheartbeat.quickstart.PHPushlinkActivity;
 import com.example.nikhil.offinaheartbeat.quickstart.PHWizardAlertDialog;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
@@ -54,15 +31,11 @@ import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHHueParsingError;
 
-public class SmartDeviceSetup extends AppCompatActivity implements OnItemClickListener{
+/**
+ * SmartDeviceSetup activity is when connect with Philips Hue lights
+ */
 
-//    BluetoothAdapter mBluetoothAdapter;
-//    public ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
-//    public DeviceListAdapter mDeviceListAdapter;
-//    List<BluetoothDevice> pairedDevices = new ArrayList<>();
-    ListView lvSmartDevices;
-//    boolean H7 = false;
-    private Spinner spinnerSmart;
+public class SmartDeviceSetup extends AppCompatActivity implements OnItemClickListener{
 
     private PHHueSDK phHueSDK;
     public static final String TAG = "QuickStart";
@@ -80,7 +53,7 @@ public class SmartDeviceSetup extends AppCompatActivity implements OnItemClickLi
         phHueSDK = PHHueSDK.create();
 
         // Set the Device Name (name of your app). This will be stored in your bridge whitelist entry.
-        phHueSDK.setAppName("QuickStartApp");
+        phHueSDK.setAppName("OffInAHeartbeat");
         phHueSDK.setDeviceName(android.os.Build.MODEL);
 
         // Register the PHSDKListener to receive callbacks from the bridge.
@@ -99,25 +72,23 @@ public class SmartDeviceSetup extends AppCompatActivity implements OnItemClickLi
 
         // Automatically try to connect to the last connected IP Address.  For multiple bridge support a different implementation is required.
         if (lastIpAddress !=null && !lastIpAddress.equals("")) {
-            Log.d("T", "not first time");
             PHAccessPoint lastAccessPoint = new PHAccessPoint();
             lastAccessPoint.setIpAddress(lastIpAddress);
             lastAccessPoint.setUsername(lastUsername);
 
             if (!phHueSDK.isAccessPointConnected(lastAccessPoint)) {
-                Log.d("T", "in isAccessPoint");
                 PHWizardAlertDialog.getInstance().showProgressDialog(R.string.connecting, this);
                 phHueSDK.connect(lastAccessPoint);
             }
         }
-       /* else {  // First time use, so perform a bridge search.
+       else {  // First time use, so perform a bridge search.
             Log.d("T", "dobridgesearch");
             //doBridgeSearch();
-        }*/
+        }
 
         //Check for the IR-emitter
         ConsumerIrManager  IR = (ConsumerIrManager)getSystemService(CONSUMER_IR_SERVICE);
-        /*if (IR.hasIrEmitter()) {
+        if (IR.hasIrEmitter()) {
             //Inform the user about the presence of his IR-emitter
             Toast.makeText(getApplicationContext(),R.string.toast_found,Toast.LENGTH_SHORT).show();
         }
@@ -144,9 +115,10 @@ public class SmartDeviceSetup extends AppCompatActivity implements OnItemClickLi
             });
             alertDialog=builder.create();
             alertDialog.show();
-        }*/
+        }
     }
 
+    //To move to next activity (connect with Bluetooth device)
     public void Next(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -189,16 +161,15 @@ public class SmartDeviceSetup extends AppCompatActivity implements OnItemClickLi
             prefs.setLastConnectedIPAddress(b.getResourceCache().getBridgeConfiguration().getIpAddress());
             prefs.setUsername(username);
             PHWizardAlertDialog.getInstance().closeProgressDialog();
-            //startMainActivity();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         }
 
         @Override
         public void onAuthenticationRequired(PHAccessPoint accessPoint) {
             Log.w(TAG, "Authentication Required.");
             phHueSDK.startPushlinkAuthentication(accessPoint);
-            //startActivity(new Intent(this, PHPushlinkActivity.class));
-
-            Intent intent = new Intent(getApplicationContext(), com.example.nikhil.offinaheartbeat.quickstart.PHPushlinkActivity.class);
+            Intent intent = new Intent(getApplicationContext(), PHPushlinkActivity.class);
             startActivity(intent);
         }
 
@@ -242,7 +213,7 @@ public class SmartDeviceSetup extends AppCompatActivity implements OnItemClickLi
                 SmartDeviceSetup.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        PHWizardAlertDialog.showErrorDialog(SmartDeviceSetup.this, message, R.string.btn_ok);
+                        PHWizardAlertDialog.showErrorDialog(SmartDeviceSetup.this, "Bridge not responding", R.string.btn_ok);
                     }
                 });
 
@@ -276,22 +247,6 @@ public class SmartDeviceSetup extends AppCompatActivity implements OnItemClickLi
             }
         }
     };
-
-    /**
-     * Called when option is selected.
-     *
-     * @param item the MenuItem object.
-     * @return boolean Return false to allow normal menu processing to proceed,  true to consume it here.
-     */
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.find_new_bridge:
-                doBridgeSearch();
-                break;
-        }
-        return true;
-    }*/
 
 
     @Override
@@ -329,15 +284,6 @@ public class SmartDeviceSetup extends AppCompatActivity implements OnItemClickLi
         sm.search(true, true);
     }
 
-    // Starting the main activity this way, prevents the PushLink Activity being shown when pressing the back button.
-    /*public void startMainActivity() {
-        Intent intent = new Intent(getApplicationContext(), MyApplicationActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            intent.addFlags(0x8000); // equal to Intent.FLAG_ACTIVITY_CLEAR_TASK which is only available from API level 11
-        startActivity(intent);
-    }*/
 
 }
 

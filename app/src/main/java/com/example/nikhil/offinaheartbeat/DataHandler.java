@@ -6,6 +6,10 @@ import com.androidplot.xy.SimpleXYSeries;
 
 import java.util.Observable;
 
+/**
+ * Datahandler class does calculation on heart rate data
+ */
+
 public class DataHandler extends Observable{
     private static DataHandler dh = new DataHandler();
 
@@ -94,10 +98,9 @@ public class DataHandler extends Observable{
     }
 
 
-    //FINISH FUNCTION HERE
+    //Set baseline variable
     public void setBaseline(){
         baseline = data/total;
-        Log.d("baseline","baseline");
     }
 
     public String getBaseline(){
@@ -133,16 +136,4 @@ public class DataHandler extends Observable{
     public ConnectH7 getH7(){
         return H7;
     }
-
-
-    /*public ConnectThread getReader() {
-        return reader;
-    }*/
-
-    /*public void setReader(ConnectThread reader) {
-        this.reader = reader;
-    }*/
-
-
-
 }

@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * DeviceListAdapter class displays Bluetooth devices ready to connect
+ */
 
 public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
 

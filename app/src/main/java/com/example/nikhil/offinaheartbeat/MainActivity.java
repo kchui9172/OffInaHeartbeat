@@ -1,14 +1,12 @@
 package com.example.nikhil.offinaheartbeat;
 
 import android.Manifest;
-import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,9 +17,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.philips.lighting.hue.listener.PHLightListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -31,13 +27,13 @@ import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+/**
+ * MainActivity activity finds Bluetooth device to connect to
+ */
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnItemSelectedListener {
     private static final String TAG = "MainActivity";
@@ -148,7 +144,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         unregisterReceiver(mBroadcastReceiver1);
         unregisterReceiver(mBroadcastReceiver3);
         unregisterReceiver(mBroadcastReceiver4);
-        //DataHandler.getInstance().deleteObserver(this);
     }
 
     @Override
@@ -156,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "Starting Off in a Heartbeat Application.");
-        //DataHandler.getInstance().addObserver(this);
 
         phHueSDK = phHueSDK.create();
 
@@ -168,20 +162,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         registerReceiver(mBroadcastReceiver4, filter);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
         lvNewDevices.setOnItemClickListener(MainActivity.this);
-
-        //mBTDevices.addAll(mBluetoothAdapter.getBondedDevices());
-
-
-       /* if (mBTDevices.size() > 0) {
-
-            // Loop through paired devices
-            for (BluetoothDevice device : mBTDevices) {
-                mDeviceListAdapter = new DeviceListAdapter(context, R.layout.device_adapter_view, mBTDevices);
-                lvNewDevices.setAdapter(mDeviceListAdapter);
-            }
-        }*/
 
         //check if Bluetooth on, if not, show pop up to turn on
         if (mBluetoothAdapter != null) {
@@ -262,44 +243,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    public void controlLights(View view) {
-        PHBridge bridge = phHueSDK.getSelectedBridge();
-
-        List<PHLight> allLights = bridge.getResourceCache().getAllLights();
-
-        for (PHLight light : allLights) {
-            PHLightState lightstate = new PHLightState();
-            lightstate.setOn(false);
-
-            bridge.updateLightState(light, lightstate, listener);
-        }
-    }
-
-    // If you want to handle the response from the bridge, create a PHLightListener object.
-    PHLightListener listener = new PHLightListener() {
-
-        @Override
-        public void onSuccess() {
-        }
-
-        @Override
-        public void onStateUpdate(Map<String, String> arg0, List<PHHueError> arg1) {
-            Log.w(TAG, "Light has updated");
-        }
-
-        @Override
-        public void onError(int arg0, String arg1) {}
-
-        @Override
-        public void onReceivingLightDetails(PHLight arg0) {}
-
-        @Override
-        public void onReceivingLights(List<PHBridgeResource> arg0) {}
-
-        @Override
-        public void onSearchComplete() {}
-    };
-
     /**
      * This method is required for all devices running API23+
      * Android must programmatically check the permissions for bluetooth. Putting the proper permissions
@@ -307,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      *
      * NOTE: This will only execute on versions > LOLLIPOP because it is not needed otherwise.
      */
-    private void checkBTPermissions() {
+    private void checkBTPermissions(){
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
             int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
             permissionCheck += this.checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
@@ -365,42 +308,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
 
         }
-        //This is for terminating process if we switch options
-//        else {
-//            if (H7) {
-//                Log.i("Main Activity", "Disabling h7");
-//                DataHandler.getInstance().getH7().cancel();
-//                DataHandler.getInstance().setH7(null);
-//            }
-//        }
-
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
-
-
     }
 
-//    public void update(Observable observable, Object data) {
-//        receiveData();
-//    }
-//
-//    public void receiveData() {
-//        runOnUiThread(new Runnable() {
-//            public void run() {
-//                TextView hr = (TextView) findViewById(R.id.hr);
-//                hr.setText(DataHandler.getInstance().getLastValue());
-//
-////                TextView min = (TextView) findViewById(R.id.min);
-////                min.setText(DataHandler.getInstance().getMin());
-////
-////                TextView avg = (TextView) findViewById(R.id.avg);
-////                avg.setText(DataHandler.getInstance().getAvg());
-////
-////                TextView max = (TextView) findViewById(R.id.max);
-////                max.setText(DataHandler.getInstance().getMax());
-//            }
-//        });
-//    }
 
 }

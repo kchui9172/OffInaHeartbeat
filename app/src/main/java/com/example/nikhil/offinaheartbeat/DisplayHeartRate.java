@@ -2,7 +2,6 @@ package com.example.nikhil.offinaheartbeat;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import java.util.Arrays;
 import java.util.List;
@@ -14,11 +13,8 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Observable;
 
 import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.*;
@@ -30,8 +26,11 @@ import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
 
-import static android.R.attr.button;
 
+/**
+ * DisplayHeartRate activity shows heart rate values and graph
+ * Contains code to change light state and turn off TV
+ */
 
 public class DisplayHeartRate extends AppCompatActivity implements Observer {
 
@@ -70,41 +69,30 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
 
         //LOAD Graph
         LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.argb(255,255, 64, 129), null, null, null);
-        //series1Format.setPointLabelFormatter(new PointLabelFormatter());
         series1Format.getLinePaint().setStrokeJoin(Paint.Join.ROUND);
         series1Format.getLinePaint().setStrokeWidth(10);
         dynamicPlot.addSeries(DataHandler.getInstance().getSeries1(), series1Format);
-        //dynamicPlot.setTicksPerRangeLabel(3);
-        //dynamicPlot.getGraphWidget().setDomainLabelOrientation(-45);
 
         dynamicPlot.getGraph().getGridBackgroundPaint().setColor(Color.argb(255,212,212,212));
         dynamicPlot.getGraph().getBackgroundPaint().setColor(Color.argb(255,47,50,122));
 
-        // getInstance and position datasets:
-//
-//        LineAndPointFormatter formatter1 = new LineAndPointFormatter(
-//                Color.rgb(0, 200, 0), null, null, null);
-//        formatter1.getLinePaint().setStrokeJoin(Paint.Join.ROUND);
-//        formatter1.getLinePaint().setStrokeWidth(10);
-//        dynamicPlot.addSeries(sine1Series,
-//                formatter1);
-
-
-        // thin out domain tick labels so they dont overlap each other:
-//        dynamicPlot.setDomainStepMode(StepMode.INCREMENT_BY_VAL);
-//        dynamicPlot.setDomainStepValue(5);
-//
-//        dynamicPlot.setRangeStepMode(StepMode.INCREMENT_BY_VAL);
-//        dynamicPlot.setRangeStepValue(10);
-
-        // uncomment this line to freeze the range boundaries:
-//        dynamicPlot.setRangeBoundaries(55, 80, BoundaryMode.FIXED);
-//
-//        // create a dash effect for domain and range grid lines:
+        // create a dash effect for domain and range grid lines:
         DashPathEffect dashFx = new DashPathEffect(
                 new float[] {PixelUtils.dpToPix(3), PixelUtils.dpToPix(3)}, 0);
         dynamicPlot.getGraph().getDomainGridLinePaint().setPathEffect(dashFx);
         dynamicPlot.getGraph().getRangeGridLinePaint().setPathEffect(dashFx);
+
+        //make sure light is on
+        PHBridge bridge = phHueSDK.getSelectedBridge();
+
+        List<PHLight> allLights = bridge.getResourceCache().getAllLights();
+
+        for (PHLight light : allLights) {
+            PHLightState lightstate = new PHLightState();
+            lightstate.setOn(true);
+            lightstate.setBrightness(254);
+            bridge.updateLightState(light, lightstate, listener);
+        }
     }
 
 
@@ -113,7 +101,7 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
         return ProgressDialog.show(c, c.getString(R.string.pd_transmission_in_progress), c.getString(R.string.pd_please_wait), true, false);
     }
 
-
+    //Changes light state based on dim value passed as parameter
     public void controlLights(int dimValue) {
         PHBridge bridge = phHueSDK.getSelectedBridge();
 
@@ -121,7 +109,7 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
 
         for (PHLight light : allLights) {
             PHLightState lightstate = new PHLightState();
-            //lightstate.setOn(false);
+            //turn off light
             if (dimValue == 0){
                 lightstate.setOn(false);
             }
@@ -195,7 +183,6 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                     baselineVal = DataHandler.getInstance().getBaselineValue();
                 }
 
-                //into deep sleep = drop by 24 bpm
 
                 //once baseline heart rate has been set
                 if (baselineSet){
@@ -206,7 +193,6 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                         change.setText("Dimming lights to 75%");
                         isDimmedLight75 = true;
                         controlLights(191);
-                        //ADD CODE TO DIM LIGHTS HERE
                     }
                     //if drop by 10 bpm, dim lights to 50%
                     if (isDimmedLight50 == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 10)){
@@ -214,7 +200,6 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                         change.setText("Dimming lights to 50%");
                         isDimmedLight50 = true;
                         controlLights(127);
-                        //ADD CODE TO DIM LIGHTS HERE
                     }
                     //if drop by 15 bpm, dim lights to 50%
                     if (isDimmedLight25 == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 15)){
@@ -222,7 +207,6 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                         change.setText("Dimming lights to 25%");
                         isDimmedLight25 = true;
                         controlLights(64);
-                        //ADD CODE TO DIM LIGHTS HERE
                     }
                     //if drop by 20 bpm, turn off lights and turn off tv
                     if (isTurnedOffLight == false && isTurnedOffTV == false && DataHandler.getInstance().getAvgVal() <= (baselineVal - 20)){
@@ -230,7 +214,6 @@ public class DisplayHeartRate extends AppCompatActivity implements Observer {
                         change.setText("Turning off lights and tv");
                         isTurnedOffLight = true;
                         isTurnedOffTV = true;
-                        //ADD CODE TO DIM LIGHTS HERE
                         controlLights(0);
 
                         //Code to turn off tv

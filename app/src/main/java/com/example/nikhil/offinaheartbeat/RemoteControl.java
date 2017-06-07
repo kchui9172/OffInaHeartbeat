@@ -7,8 +7,11 @@ package com.example.nikhil.offinaheartbeat;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
+
+/**
+ * RemoteControl class consists of pattern to transmit, call kill function to transmit IR pattern
+ */
 
 public class RemoteControl {
 
@@ -18,25 +21,17 @@ public class RemoteControl {
     private String designation;
 
     protected RemoteControl(String designation, Pattern[] patterns){
-        Log.d("rc1","herro");
         this.patterns = patterns;
         this.designation = designation;
     }
 
     protected RemoteControl(String designation, Pattern[] patterns, Pattern mute){
-        Log.d("rc2","herro1");
         this.patterns = patterns;
         this.designation = designation;
         this.mute = mute;
     }
 
-
-    public static void showWorks(){
-        Log.d("t","meow");
-    }
-
     public static void kill(Context c){
-        Log.d("k","killing tv");
         int depth = 1;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(c);
         if (preferences.getBoolean("depth",false)){
@@ -47,9 +42,7 @@ public class RemoteControl {
             for (RemoteControl r: RemoteControlContainer.getAllBrands()){
                 if (r.dotransmit){
                     if (i < r.patterns.length){
-                        Log.d("transmitting","woot");
                         r.patterns[i].send(c);
-//                        wait(c);
                     }
                 }
             }

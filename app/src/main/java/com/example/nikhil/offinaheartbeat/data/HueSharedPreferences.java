@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.philips.lighting.hue.sdk.connection.impl.PHBridgeInternal;
-
 public class HueSharedPreferences {
     private static final String HUE_SHARED_PREFERENCES_STORE = "HueSharedPrefs";
     private static final String LAST_CONNECTED_USERNAME      = "LastConnectedUsername";
